@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fredoka, Inter } from "next/font/google";
 import { Navbar } from "~/components/navbar";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const fredoka = Fredoka({ subsets: ["latin"], variable: "--font-fredoka", weight: "700" });
 
 export const metadata: Metadata = {
-  title: "Lumos App",
-  description: "Built with create-lumos-app",
+  title: "Studyishh",
+  description: "Find your favourite math resources",
+  metadataBase: new URL("https://studyishh.com"),
+  openGraph: {
+    url: "https://studyishh.com",
+    siteName: "Studyishh",
+  },
 };
 
 export default function RootLayout({
@@ -16,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.className}>
+    <html lang="en">
+      <body className={`${inter.variable} ${fredoka.variable} ${inter.className}`}>
         <Navbar />
         {children}
       </body>

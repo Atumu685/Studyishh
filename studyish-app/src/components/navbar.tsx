@@ -6,17 +6,16 @@ import { cn } from "~/lib/utils";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/notes", label: "Notes" },
 ];
 
 export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="border-b border-border bg-background">
+    <nav className="relative z-[2] border-b border-border/60 bg-card/70 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-3xl items-center gap-6 px-4">
-        <Link href="/" className="font-semibold tracking-tight">
-          Lumos App
+        <Link href="/" className="kawaii-title text-lg tracking-tight">
+          Studyishh
         </Link>
         <div className="flex gap-4">
           {links.map((link) => (
@@ -24,9 +23,9 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-sm transition-colors hover:text-foreground",
+                "text-sm transition-colors hover:text-primary",
                 pathname === link.href
-                  ? "text-foreground"
+                  ? "font-semibold text-primary"
                   : "text-muted-foreground",
               )}
             >
