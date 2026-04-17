@@ -1077,11 +1077,11 @@ function BearHelper({ onSuggest }: { onSuggest: (q: string) => void }) {
 
 // ── page ──────────────────────────────────────────────────────────────────────
 
-export default function Home() {
+export default function Home({ defaultSubject = "All Subjects" }: { defaultSubject?: string }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string>("All");
   const [level, setLevel] = useState<string>("All Levels");
-  const [subject, setSubject] = useState<string>("All Subjects");
+  const [subject, setSubject] = useState<string>(defaultSubject);
 
   const { filtered, detectedTags } = useMemo(() => {
     const q = search.trim();

@@ -6,6 +6,8 @@ import { cn } from "~/lib/utils";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/math", label: "Math" },
+  { href: "/science", label: "Science" },
 ];
 
 export function Navbar() {
