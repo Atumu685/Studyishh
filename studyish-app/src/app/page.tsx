@@ -690,6 +690,8 @@ const SCIENCE_SITES: MathSite[] = [
 const ALL_SITES: MathSite[] = [...MATH_SITES, ...SCIENCE_SITES];
 
 const CATEGORIES = ["All", "Algebra", "Geometry", "Calculus", "Statistics", "Problem Solving", "Visualization", "Videos", "Competition", "SAT/ACT", "Biology", "Chemistry", "Physics", "Earth Science", "Astronomy"] as const;
+const MATH_CATEGORIES = ["All", "Algebra", "Geometry", "Calculus", "Statistics", "Problem Solving", "Visualization", "Videos", "Competition", "SAT/ACT"] as const;
+const SCIENCE_CATEGORIES = ["All", "Biology", "Chemistry", "Physics", "Earth Science", "Astronomy", "Visualization", "Videos"] as const;
 const LEVELS = ["All Levels", "Elementary", "Middle School", "High School", "College"] as const;
 const SUBJECTS = ["All Subjects", "Math", "Science"] as const;
 
@@ -1201,11 +1203,11 @@ export default function Home({ defaultSubject = "All Subjects" }: { defaultSubje
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap gap-2 justify-center">
             {SUBJECTS.map((sub) => (
-              <FilterChip key={sub} label={sub} active={subject === sub} onClick={() => { setSubject(sub); setCategory("All"); }} />
+              <FilterChip key={sub} label={sub} active={subject === sub} onClick={() => { setSubject(sub); setCategory("All"); setLevel("All Levels"); }} />
             ))}
           </div>
           <div className="flex flex-wrap gap-2 justify-center">
-            {CATEGORIES.map((cat) => (
+            {(subject === "Math" ? MATH_CATEGORIES : subject === "Science" ? SCIENCE_CATEGORIES : CATEGORIES).map((cat) => (
               <FilterChip key={cat} label={cat} active={category === cat} onClick={() => setCategory(cat)} />
             ))}
           </div>
