@@ -360,6 +360,7 @@ interface MathSite {
   levels: string[];
   emoji: string;
   featured?: boolean;
+  subject?: "Math" | "Science";
 }
 
 const MATH_SITES: MathSite[] = [
@@ -560,8 +561,137 @@ const MATH_SITES: MathSite[] = [
   },
 ];
 
-const CATEGORIES = ["All", "Algebra", "Geometry", "Calculus", "Statistics", "Problem Solving", "Visualization", "Videos", "Competition", "SAT/ACT"] as const;
+const SCIENCE_SITES: MathSite[] = [
+  {
+    id: "khan-science",
+    name: "Khan Academy — Science",
+    url: "https://www.khanacademy.org/science",
+    description: "Free science courses covering biology, chemistry, physics, and earth science with videos, articles, and practice exercises — the same world-class quality as Khan Academy Math.",
+    categories: ["Biology", "Chemistry", "Physics", "Earth Science"],
+    levels: ["Middle School", "High School", "College"],
+    emoji: "🔬",
+    subject: "Science",
+    featured: true,
+  },
+  {
+    id: "phet",
+    name: "PhET Interactive Simulations",
+    url: "https://phet.colorado.edu",
+    description: "Free, research-based interactive simulations for physics, chemistry, biology, and earth science from the University of Colorado Boulder. Hands-on virtual experiments you can run in any browser.",
+    categories: ["Physics", "Chemistry", "Biology", "Earth Science", "Visualization"],
+    levels: ["Middle School", "High School", "College"],
+    emoji: "⚗️",
+    subject: "Science",
+    featured: true,
+  },
+  {
+    id: "physics-classroom",
+    name: "The Physics Classroom",
+    url: "https://www.physicsclassroom.com",
+    description: "Comprehensive, free physics tutorials covering mechanics, waves, electricity, light, and more. Clear written lessons with diagrams and practice problems — a go-to for high school physics.",
+    categories: ["Physics"],
+    levels: ["High School", "College"],
+    emoji: "⚡",
+    subject: "Science",
+  },
+  {
+    id: "chemguide",
+    name: "Chemguide",
+    url: "https://www.chemguide.co.uk",
+    description: "Detailed free chemistry notes covering organic, inorganic, and physical chemistry. Written in plain English for students — a trusted resource for A-level and introductory college chemistry.",
+    categories: ["Chemistry"],
+    levels: ["High School", "College"],
+    emoji: "🧪",
+    subject: "Science",
+  },
+  {
+    id: "hhmi-biointeractive",
+    name: "HHMI BioInteractive",
+    url: "https://www.biointeractive.org",
+    description: "Free biology resources from the Howard Hughes Medical Institute, including videos, animations, and classroom activities developed by leading scientists. Exceptional for genetics, evolution, and cell biology.",
+    categories: ["Biology"],
+    levels: ["High School", "College"],
+    emoji: "🧬",
+    subject: "Science",
+    featured: true,
+  },
+  {
+    id: "nasa-science",
+    name: "NASA Science",
+    url: "https://science.nasa.gov",
+    description: "Explore astronomy, earth science, and space physics through NASA's free articles, videos, and interactive tools. From our solar system to the edge of the observable universe.",
+    categories: ["Astronomy", "Earth Science", "Physics"],
+    levels: ["Middle School", "High School", "College"],
+    emoji: "🚀",
+    subject: "Science",
+  },
+  {
+    id: "ck12",
+    name: "CK-12",
+    url: "https://www.ck12.org",
+    description: "Free, customisable textbooks and practice for science and math. Covers life science, physical science, earth science, biology, chemistry, and physics with built-in interactive simulations.",
+    categories: ["Biology", "Chemistry", "Physics", "Earth Science"],
+    levels: ["Middle School", "High School"],
+    emoji: "📗",
+    subject: "Science",
+  },
+  {
+    id: "crash-course-science",
+    name: "Crash Course",
+    url: "https://www.youtube.com/@crashcourse",
+    description: "Free YouTube series with engaging, fast-paced videos covering biology, chemistry, physics, astronomy, and more. Perfect for building a solid conceptual overview of any science topic quickly.",
+    categories: ["Biology", "Chemistry", "Physics", "Astronomy", "Videos"],
+    levels: ["High School", "College"],
+    emoji: "🎬",
+    subject: "Science",
+  },
+  {
+    id: "ptable",
+    name: "Ptable — Interactive Periodic Table",
+    url: "https://ptable.com",
+    description: "The best free interactive periodic table on the web. View element properties, electron orbitals, isotopes, and compounds with a beautiful, information-rich interface.",
+    categories: ["Chemistry", "Visualization"],
+    levels: ["Middle School", "High School", "College"],
+    emoji: "🔵",
+    subject: "Science",
+  },
+  {
+    id: "learn-genetics",
+    name: "Learn.Genetics",
+    url: "https://learn.genetics.utah.edu",
+    description: "Free genetics and molecular biology resources from the University of Utah, with interactive animations and clear explanations of DNA, heredity, epigenetics, and biotechnology.",
+    categories: ["Biology"],
+    levels: ["High School", "College"],
+    emoji: "🧫",
+    subject: "Science",
+  },
+  {
+    id: "chemistry-libretexts",
+    name: "Chemistry LibreTexts",
+    url: "https://chem.libretexts.org",
+    description: "A massive free open-access chemistry textbook covering general, organic, analytical, inorganic, and physical chemistry. College-level depth with worked examples throughout.",
+    categories: ["Chemistry"],
+    levels: ["High School", "College"],
+    emoji: "📙",
+    subject: "Science",
+  },
+  {
+    id: "biology-corner",
+    name: "Biology Corner",
+    url: "https://www.biologycorner.com",
+    description: "Free biology lessons, worksheets, and resources for high school students and teachers. Covers anatomy, ecology, genetics, cell biology, and more with printable labs.",
+    categories: ["Biology"],
+    levels: ["High School"],
+    emoji: "🌿",
+    subject: "Science",
+  },
+];
+
+const ALL_SITES: MathSite[] = [...MATH_SITES, ...SCIENCE_SITES];
+
+const CATEGORIES = ["All", "Algebra", "Geometry", "Calculus", "Statistics", "Problem Solving", "Visualization", "Videos", "Competition", "SAT/ACT", "Biology", "Chemistry", "Physics", "Earth Science", "Astronomy"] as const;
 const LEVELS = ["All Levels", "Elementary", "Middle School", "High School", "College"] as const;
+const SUBJECTS = ["All Subjects", "Math", "Science"] as const;
 
 // ── smart search ──────────────────────────────────────────────────────────────
 
@@ -580,7 +710,7 @@ function parseQuery(query: string): { levels: string[]; categories: string[] } {
   if (/\b(college|university|undergrad|calc(ulus)?\s*[23]|linear\s*algebra|diff(erential)?\s*eq|graduate)\b/.test(q))
     levels.push("College");
 
-  // Subject / topic detection
+  // Math subject / topic detection
   if (/\b(algebra|equation|linear|quadratic|polynomial|pre-?algebra|expression|variable|function|factoring)\b/.test(q))
     categories.push("Algebra");
   if (/\b(geometry|geometric|shape|triangle|circle|proof|angle|area|volume|coordinate|pythagorean|congruent)\b/.test(q))
@@ -599,6 +729,18 @@ function parseQuery(query: string): { levels: string[]; categories: string[] } {
     categories.push("Videos");
   if (/\b(sat\b|act\b|college\s*board|test\s*prep|standardized\s*test|psat|bluebook|digital\s*sat)\b/.test(q))
     categories.push("SAT/ACT");
+
+  // Science subject / topic detection
+  if (/\b(bio(logy)?|cell|organism|evolution|genetics|ecology|anatomy|photosynthesis|dna|heredity)\b/.test(q))
+    categories.push("Biology");
+  if (/\b(chem(istry)?|chemical|element|compound|reaction|periodic\s*table|molecule|acid|base|organic|inorganic)\b/.test(q))
+    categories.push("Chemistry");
+  if (/\b(physics|force|motion|energy|momentum|wave|electric|magnetic|optics|thermodynamics|mechanics|quantum)\b/.test(q))
+    categories.push("Physics");
+  if (/\b(earth\s*science|geology|weather|climate|atmosphere|plate\s*tectonics|rock|mineral|oceanography)\b/.test(q))
+    categories.push("Earth Science");
+  if (/\b(astronom(y|ical)|space|planet|star|galaxy|universe|solar\s*system|nasa|cosmos|telescope)\b/.test(q))
+    categories.push("Astronomy");
 
   return { levels, categories };
 }
@@ -859,7 +1001,7 @@ function BearHelper({ onSuggest }: { onSuggest: (q: string) => void }) {
               <WhiteBear size={32} />
               <div>
                 <p className="text-sm font-semibold leading-tight">Hi! I'm Beary ♡</p>
-                <p className="text-[11px] text-muted-foreground">Ask me anything about math!</p>
+                <p className="text-[11px] text-muted-foreground">Ask me anything about math or science!</p>
               </div>
             </div>
 
@@ -939,23 +1081,25 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string>("All");
   const [level, setLevel] = useState<string>("All Levels");
+  const [subject, setSubject] = useState<string>("All Subjects");
 
   const { filtered, detectedTags } = useMemo(() => {
     const q = search.trim();
 
     const chipFilter = (site: MathSite) =>
+      (subject === "All Subjects" || (site.subject ?? "Math") === subject) &&
       (category === "All" || site.categories.includes(category)) &&
       (level === "All Levels" || site.levels.includes(level));
 
     if (!q) {
-      return { filtered: MATH_SITES.filter(chipFilter), detectedTags: [] };
+      return { filtered: ALL_SITES.filter(chipFilter), detectedTags: [] };
     }
 
     const parsed = parseQuery(q);
     const detectedTags = [...parsed.levels, ...parsed.categories];
     const isSmartQuery = detectedTags.length > 0;
 
-    const scored = MATH_SITES.map((site) => ({
+    const scored = ALL_SITES.map((site) => ({
       site,
       score: scoreSite(site, parsed, q),
     }));
@@ -982,7 +1126,7 @@ export default function Home() {
     <div className="relative">
       <BookDecor />
       <FallingFlowers />
-      <BearHelper onSuggest={(q) => { setSearch(q); setCategory("All"); setLevel("All Levels"); }} />
+      <BearHelper onSuggest={(q) => { setSearch(q); setCategory("All"); setLevel("All Levels"); setSubject("All Subjects"); }} />
 
       <main className="relative z-[2] mx-auto max-w-5xl px-5 py-8 flex flex-col gap-7">
         {/* header — book cover title page */}
@@ -1019,7 +1163,7 @@ export default function Home() {
               <h1 className="kawaii-title text-5xl tracking-tight leading-none">Studyishh</h1>
               {/* subtitle */}
               <p className="text-sm italic leading-snug" style={{ color: "oklch(0.500 0.060 35)" }}>
-                find your favourite math resources
+                find your favourite math & science resources
               </p>
               {/* bottom ornament */}
               <div className="ornament-line w-full text-xs tracking-widest select-none" style={{ color: "oklch(0.680 0.090 38)" }}>❀</div>
@@ -1031,7 +1175,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-xl flex flex-col gap-2">
           <input
             type="search"
-            placeholder='e.g. "pre-algebra 7th grade visual learner" or "calculus videos college"'
+            placeholder='e.g. "pre-algebra 7th grade" or "chemistry college" or "physics videos"'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-full border border-border bg-card/85 px-5 py-3 text-sm shadow-sm outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 backdrop-blur-sm"
@@ -1055,6 +1199,11 @@ export default function Home() {
 
         {/* filters */}
         <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap gap-2 justify-center">
+            {SUBJECTS.map((sub) => (
+              <FilterChip key={sub} label={sub} active={subject === sub} onClick={() => { setSubject(sub); setCategory("All"); }} />
+            ))}
+          </div>
           <div className="flex flex-wrap gap-2 justify-center">
             {CATEGORIES.map((cat) => (
               <FilterChip key={cat} label={cat} active={category === cat} onClick={() => setCategory(cat)} />
@@ -1090,7 +1239,7 @@ export default function Home() {
             <p className="text-muted-foreground">no websites match your search ♡</p>
             <button
               type="button"
-              onClick={() => { setSearch(""); setCategory("All"); setLevel("All Levels"); }}
+              onClick={() => { setSearch(""); setCategory("All"); setLevel("All Levels"); setSubject("All Subjects"); }}
               className="mt-2 text-sm text-primary underline underline-offset-2"
             >
               clear filters
@@ -1101,7 +1250,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-2 pb-4">
           <div className="ornament-line w-full max-w-xs text-[10px] tracking-widest text-muted-foreground/50 select-none">❀</div>
           <p className="text-center text-xs text-muted-foreground opacity-60 tracking-widest uppercase">
-            studyishh · your cozy math corner
+            studyishh · your cozy study corner
           </p>
         </div>
       </main>
